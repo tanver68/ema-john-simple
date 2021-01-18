@@ -3,18 +3,18 @@ import fakeData from '../../fakeData';
 import { getDatabaseCart, processOrder, removeFromDatabaseCart } from '../../utilities/databaseManager';
 import Cart from '../Cart/Cart';
 import ReviewItem from '../ReviewItem/ReviewItem';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import happyImage from '../../images/giphy.gif';
 
 const Review = () => {
    
     const [cart,setCart] = useState([]);
     const [orderPlaced,setOrderPlaced] = useState(false); //place order e click korle jate amra akta image dakhte pay tar jonno akta state dclear korlam
-    const handlePlaceOrder = () =>
+
+    const history = useHistory()  //shipment er route e jaowar jonno history api call korlam
+    const handleProcedCheckout = () =>
     {
-        setCart([]);   // web site theke order er data clean hoye jabe
-        setOrderPlaced(true); //ay state er value ta true hoye jabe jkhn ay state er valutak amra set kore delam . akhn atak amra use kore onek kichu dakhate pari jmon image dakhabo happyimage
-        processOrder(); //local storage browser database theke data clean hoye jabe jgulo order kora hoyece
+        history.push ('/shipment'); //history api e shipment k push koredelam
     } 
 
     const removeProduct = (productKey) => {
@@ -69,8 +69,8 @@ const Review = () => {
             <div className="cart-container">
                     <Cart cart={cart}>
                         <Link to = '/review'>
-                            <button onClick={handlePlaceOrder} //jehetu parameter pass kora lagbe na tay erow function(() =>) declear korlam na
-                            className="main-button">Place Order</button>
+                            <button onClick={handleProcedCheckout} //jehetu parameter pass kora lagbe na tay erow function(() =>) declear korlam na
+                            className="main-button">Procede Checkout</button>
                         </Link>
                     </Cart>
             </div>
