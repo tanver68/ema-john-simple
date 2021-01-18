@@ -15,10 +15,18 @@ import Notfound from './components/Notfound/Notfound';
 import ProductDetails from './components/ProductDetails/ProductDetails';
 import Login from './components/Login/Login';
 import Shipment from './components/Shipment/Shipment';
+import { createContext } from 'react';
+import { useState } from 'react';
 
-function App() {
+export const UserContext = createContext();  //context api create korlam
+
+function App(props) {
+  const [loggedInUser,setLoggedInUser] = useState({})
   return (
-    <div>
+               //app er akdom root e usercontext ta debo and .provider debo. and ay provider er 2 ta value debo. akta loggedInuser ar akta setloggedinuser .(setloggedinuser dece karon jate amra tolay kono akta jayga theke setloggedinuser atak use kore ,ay loggedinuser ar value ta onno jaygay set kore felte pari. abong je je chay se se loggedinuser 1st valutak use kore felte pare)
+
+    <UserContext.Provider value={[loggedInUser,setLoggedInUser]} >
+      <p>login email:{loggedInUser.email}</p> 
       <Header></Header>
       <Router>
         <Switch>
@@ -52,7 +60,7 @@ function App() {
       </Router>
       
       
-    </div>
+    </UserContext.Provider>
   );
 }
 

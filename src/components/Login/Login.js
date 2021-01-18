@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from './firebase.config';
+import { useContext } from 'react';
+import {UserContext} from '../../App';
 
 firebase.initializeApp(firebaseConfig);
 
@@ -22,6 +24,8 @@ function Login() {
     error: '',
     correct: false
   })
+
+  const [loggedInUser,setLoggedInUser] = useContext(UserContext);  //akhane normal usestate use kora jabe na karon usestate dele akhane local akta state toyre korbe.(amra chay context theke url ante tay usecontext debo and akhane pass korbo oi user er context tak)
 
   const provider = new firebase.auth.GoogleAuthProvider();  //gmail theke login korar jonno firebase theke anci
   const fbProvider = new firebase.auth.FacebookAuthProvider(); // facebook theke login er jonno firebase theke anci
@@ -178,6 +182,7 @@ function Login() {
         newUserInfo.error ='';  
         newUserInfo.correct = true;  
         setUser(newUserInfo)
+        setLoggedInUser(newUserInfo); //context er oy jagay(that means jkhane context ace) set kore delam userinformation gulo
         console.log('sign in user info',res.user)
       })
       .catch((error) => {
