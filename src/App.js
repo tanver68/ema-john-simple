@@ -17,18 +17,21 @@ import Login from './components/Login/Login';
 import Shipment from './components/Shipment/Shipment';
 import { createContext } from 'react';
 import { useState } from 'react';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 export const UserContext = createContext();  //context api create korlam
 
-function App(props) {
+function App() {
   const [loggedInUser,setLoggedInUser] = useState({})
   return (
                //app er akdom root e usercontext ta debo and .provider debo. and ay provider er 2 ta value debo. akta loggedInuser ar akta setloggedinuser .(setloggedinuser dece karon jate amra tolay kono akta jayga theke setloggedinuser atak use kore ,ay loggedinuser ar value ta onno jaygay set kore felte pari. abong je je chay se se loggedinuser 1st valutak use kore felte pare)
 
     <UserContext.Provider value={[loggedInUser,setLoggedInUser]} >
       <p>login email:{loggedInUser.email}</p> 
-      <Header></Header>
+      
       <Router>
+                {/* switch er vitor jehetu router de nai sehetu ata common thakbe */}
+      <Header></Header>
         <Switch>
           <Route path="/shop">
               <Shop></Shop>
@@ -42,9 +45,10 @@ function App(props) {
           <Route path="/login">
                <Login></Login>
           </Route>
-          <Route path="/shipment">
+          <PrivateRoute path="/shipment">
+            {/* shipmant ta normal route na, ata private route   */}
                <Shipment></Shipment>
-          </Route>
+          </PrivateRoute>
           <Route exact path="/">
 
           </Route>

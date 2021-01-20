@@ -12,10 +12,9 @@ const Review = () => {
     const [orderPlaced,setOrderPlaced] = useState(false); //place order e click korle jate amra akta image dakhte pay tar jonno akta state dclear korlam
 
     const history = useHistory()  //shipment er route e jaowar jonno history api call korlam
-    const handleProcedCheckout = () =>
-    {
-        history.push ('/shipment'); //history api e shipment k push koredelam
-    } 
+    const handleProceedCheckout = () =>{
+        history.push('/shipment');   //history api push korlam that means button theke click korle shipmant path dhore login page e jabe
+    }
 
     const removeProduct = (productKey) => {
         //console.log('remove cliked',productKey);
@@ -68,10 +67,10 @@ const Review = () => {
            
             <div className="cart-container">
                     <Cart cart={cart}>
-                        <Link to = '/review'>
-                            <button onClick={handleProcedCheckout} //jehetu parameter pass kora lagbe na tay erow function(() =>) declear korlam na
+                        
+                            <button onClick={handleProceedCheckout} //jehetu parameter pass kora lagbe na tay erow function(() =>) declear korlam na
                             className="main-button">Procede Checkout</button>
-                        </Link>
+                        
                     </Cart>
             </div>
             

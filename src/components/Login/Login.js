@@ -5,6 +5,7 @@ import "firebase/auth";
 import firebaseConfig from './firebase.config';
 import { useContext } from 'react';
 import {UserContext} from '../../App';
+import { useHistory, useLocation } from 'react-router-dom';
 
 firebase.initializeApp(firebaseConfig);
 
@@ -27,8 +28,15 @@ function Login() {
 
   const [loggedInUser,setLoggedInUser] = useContext(UserContext);  //akhane normal usestate use kora jabe na karon usestate dele akhane local akta state toyre korbe.(amra chay context theke url ante tay usecontext debo and akhane pass korbo oi user er context tak)
 
+  const history = useHistory();
+  const location = useLocation();  //(location ta set kore fellam and shipmant path e Shipmant page e gelo ba redirect hoye gelo)
+
+  let { from } = location.state || { from: { pathname: "/" } }; //state e jabe that means location hobe state r na hole (/) means akdom root page e jabe and SOBAR SESE APPLICATION TA JODI AUTHENTICATION HOYE JAY TAHOLE REDIRECT KORE DETE HOBE ( history.replace(from);) AY CODE TA JKHANE SIGN IN KORCI SEKHANE LIKHTE HOBE
+
   const provider = new firebase.auth.GoogleAuthProvider();  //gmail theke login korar jonno firebase theke anci
+
   const fbProvider = new firebase.auth.FacebookAuthProvider(); // facebook theke login er jonno firebase theke anci
+
   const handleSignIn = () =>{
     firebase.auth().signInWithPopup(provider)
     .then(res => {
@@ -183,6 +191,8 @@ function Login() {
         newUserInfo.correct = true;  
         setUser(newUserInfo)
         setLoggedInUser(newUserInfo); //context er oy jagay(that means jkhane context ace) set kore delam userinformation gulo
+
+        history.replace(from); //set howar pore j location mane from theke ashcilo sekhane replace hoye jabe
         console.log('sign in user info',res.user)
       })
       .catch((error) => {
